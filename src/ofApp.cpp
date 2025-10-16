@@ -1,0 +1,143 @@
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup()
+{
+    ofBackground(0,0,0);
+
+    // try to grab at this size
+    camw = 1280;
+    camh = 720;
+    mode='c'; // 'a'
+    frmctr=0;
+
+    vg.setVerbose(true);
+    vg.setup(camw, camh);
+
+    fnt.load("OCRA", 9);
+    f2.load("OCRA", 18);
+    symctr=0;
+
+    asc = string("  ..,,,'''``--_:;^^**""=+<>iv%&xclrs)/){}I?!][1taeo7zjLunT#@JCwfy325Fp6mqSghVd4EgXPGZbYkOA8U$KHDBWNMR0Q");
+    sym = string("<^>v<^>v _ _ _ _ -\\|/--\\|/- lliivveeccoodde..bbllrr -/|\\-/|\\-");
+    txt = string("");
+}
+
+//--------------------------------------------------------------
+void ofApp::update()
+{
+    vg.update();
+    if(frmctr%10==0)
+    {
+        symctr=(symctr+1)%sym.size();
+    }
+    frmctr++;
+}
+
+//--------------------------------------------------------------
+void ofApp::draw()
+{
+    float xoff=(ofGetWidth()-camw)/2;
+    float yoff=(ofGetHeight()-camh)/2;
+
+    if(mode=='c')
+    {
+        ofSetColor(255,255,255);
+        vg.draw(xoff, yoff);
+    }
+    else if(mode=='a')
+    {
+        ofPixelsRef pixelsRef = vg.getPixels();
+        ofSetColor(11,222,22);
+        for (int i = 0; i < camw; i+= 7)
+        {
+            for (int j = 0; j < camh; j+= 9)
+            {
+                float lightness = pixelsRef.getColor(i,j).getLightness();
+                int character = powf( ofMap(lightness, 0, 255, 0, 1), 2.5) * asc.size();
+                fnt.drawString(ofToString(asc[character]), xoff+i, yoff+8+j);
+            }
+        }
+
+        f2.drawString(ofToString(sym[symctr]), xoff, yoff+camh+33);
+        f2.drawString(txt, xoff+28, yoff+camh+33);
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key)
+{
+    cout<<key<<endl;
+    if(mode=='c')
+    {
+        if(key==57344)
+        {
+            mode='a';
+        }
+    }
+    else if(mode=='a')
+    {
+        if(key==57344)
+        {
+            mode='c';
+        }
+        else if(key==13) // enter
+        {
+            txt=string("");
+        }
+        else
+        {
+            txt+=(char)key;
+        }
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y ){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseDragged(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mousePressed(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseEntered(int x, int y){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseExited(int x, int y){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::windowResized(int w, int h){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::gotMessage(ofMessage msg){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::dragEvent(ofDragInfo dragInfo){ 
+
+}
