@@ -4,6 +4,9 @@
 
 #define GN 6
 #define PWMI 6
+#define NCTR 8
+#define MAXRND 108
+#define QLEN 8
 
 class glch
 {
@@ -19,9 +22,12 @@ public:
         vy=_vy;
     }
     
-    void rndr()
+    void rndr(bool isneo, bool isares)
     {
-        ofSetColor(0,255,128,55);
+        if(isneo) ofSetColor(0,255,128,55);
+        else if(isares) ofSetColor(255,88,11,55);
+        else ofSetColor(255,255,255,55);
+
         ofDrawLine(x-5,y,x+5,y-1);
         ofDrawLine(x-10,y,x+10,y+1);
         ofDrawLine(x-20,y,x+20,y);
@@ -65,8 +71,8 @@ class ofApp : public ofBaseApp{
         void gotMessage(ofMessage msg);
 
         void cmdproc(string ln);
-        void lstr(ofTrueTypeFont ttf, string lcb, float fsz, float x, float y, float xd, float yd);
-        void rstr(ofTrueTypeFont ttf, string lcb, float fsz, float x, float y, float xd, float yd);
+        void lstr(int ix, ofTrueTypeFont ttf, string lcb, float fsz, float x, float y, float xd, float yd);
+        void rstr(int ix, ofTrueTypeFont ttf, string lcb, float fsz, float x, float y, float xd, float yd);
 
         ofVideoGrabber vg;
         int camw;
@@ -74,6 +80,7 @@ class ofApp : public ofBaseApp{
         
         string asc;
         string xsc;
+        string num;
         ofTrueTypeFont fnt;
         ofTrueTypeFont f2;
         ofTrueTypeFont f1;
@@ -90,4 +97,16 @@ class ofApp : public ofBaseApp{
         bool isares;
         string cln;
         string host;
+        int xr[NCTR];
+
+        string quot[QLEN]={
+            "there is no spoon.",
+            "what is the matrix?",
+            "some programs will be thinking soon",
+            "follow the white rabbit...",
+            "greetings, programs!",
+            "codified likeness utility",
+            "biodigital jazz, man. the ISOs",
+            "programs are disappearing, castor."
+        };
 };
