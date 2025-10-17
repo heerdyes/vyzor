@@ -4,8 +4,8 @@
 void ofApp::setup()
 {
     ofBackground(0,0,0);
+    ofSetWindowTitle("vyzor");
 
-    // try to grab at this size
     camw = 1280;
     camh = 720;
     mode='c'; // 'a'
@@ -14,8 +14,8 @@ void ofApp::setup()
     vg.setVerbose(true);
     vg.setup(camw, camh);
 
-    fnt.load("OCRA", 9);
-    f2.load("OCRA", 18);
+    fnt.load("Courier", 9);
+    f2.load("Courier", 22);
     symctr=0;
 
     asc = string("  ..,,,'''``--_:;^^**""=+<>iv%&xclrs)/){}I?!][1taeo7zjLunT#@JCwfy325Fp6mqSghVd4EgXPGZbYkOA8U$KHDBWNMR0Q");
@@ -58,10 +58,13 @@ void ofApp::draw()
                 fnt.drawString(ofToString(asc[character]), xoff+i, yoff+8+j);
             }
         }
-
-        f2.drawString(ofToString(sym[symctr]), xoff, yoff+camh+33);
-        f2.drawString(txt, xoff+28, yoff+camh+33);
     }
+    
+    float dh=yoff+camh+33;
+    f2.drawString("|", xoff, dh);
+    f2.drawString(ofToString(sym[symctr]), xoff+22, dh);
+    f2.drawString("|", xoff+44, dh);
+    f2.drawString(txt, xoff+72, dh);
 }
 
 //--------------------------------------------------------------
@@ -74,6 +77,18 @@ void ofApp::keyPressed(int key)
         {
             mode='a';
         }
+        else if(key==13) // enter
+        {
+            txt=string("");
+        }
+        else if(key==8)
+        {
+            if(txt.length()>0) txt.pop_back();
+        }
+        else
+        {
+            txt+=(char)key;
+        }
     }
     else if(mode=='a')
     {
@@ -84,6 +99,10 @@ void ofApp::keyPressed(int key)
         else if(key==13) // enter
         {
             txt=string("");
+        }
+        else if(key==8)
+        {
+            if(txt.length()>0) txt.pop_back();
         }
         else
         {
