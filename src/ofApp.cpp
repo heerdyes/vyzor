@@ -14,8 +14,8 @@ void ofApp::setup()
     vg.setVerbose(true);
     vg.setup(camw, camh);
 
-    fnt.load("Courier", 9);
-    f2.load("Courier", 22);
+    fnt.load("OCRA", 9);
+    f2.load("OCRA", 22);
     symctr=0;
 
     asc = string("  ..,,,'''``--_:;^^**""=+<>iv%&xclrs)/){}I?!][1taeo7zjLunT#@JCwfy325Fp6mqSghVd4EgXPGZbYkOA8U$KHDBWNMR0Q");
@@ -64,7 +64,9 @@ void ofApp::draw()
     f2.drawString("|", xoff, dh);
     f2.drawString(ofToString(sym[symctr]), xoff+22, dh);
     f2.drawString("|", xoff+44, dh);
-    f2.drawString(txt, xoff+72, dh);
+    f2.drawString(txt, xoff+78, dh);
+    
+    // date and time
 }
 
 //--------------------------------------------------------------
