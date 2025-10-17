@@ -20,7 +20,7 @@ public:
     
     void rndr()
     {
-        ofSetColor(0,255,0,108);
+        ofSetColor(0,255,128,108);
         ofDrawLine(x-5,y,x+5,y);
         ofDrawLine(x-10,y,x+10,y);
         ofDrawLine(x-15,y,x+15,y);
@@ -83,5 +83,6 @@ class ofApp : public ofBaseApp{
         
         glch gx[GN];
         bool isglitch;
+        bool isneo;
 };
 

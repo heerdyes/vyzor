@@ -30,6 +30,7 @@ void ofApp::setup()
     }
     
     isglitch=true;
+    isneo=false;
 }
 
 //--------------------------------------------------------------
@@ -56,12 +57,12 @@ void ofApp::draw()
     float xoff=(ofGetWidth()-camw)/2;
     float yoff=(ofGetHeight()-camh)/2;
 
-    if(mode=='c')
+    if(!isneo)
     {
         ofSetColor(255,255,255);
         vg.draw(xoff, yoff);
     }
-    else if(mode=='a')
+    else
     {
         ofPixelsRef pixelsRef = vg.getPixels();
         ofSetColor(11,222,22);
@@ -101,44 +102,31 @@ void ofApp::draw()
 void ofApp::keyPressed(int key)
 {
     cout<<key<<endl;
-    if(key==57345) isglitch=!isglitch;
-    if(mode=='c')
+
+    // modes
+    if(key==57345)
     {
-        if(key==57344)
-        {
-            mode='a';
-        }
-        else if(key==13) // enter
-        {
-            txt=string("");
-        }
-        else if(key==8)
-        {
-            if(txt.length()>0) txt.pop_back();
-        }
-        else
-        {
-            txt+=(char)key;
-        }
+        isglitch=!isglitch;
+        return;
     }
-    else if(mode=='a')
+    if(key==57344)
     {
-        if(key==57344)
-        {
-            mode='c';
-        }
-        else if(key==13) // enter
-        {
-            txt=string("");
-        }
-        else if(key==8)
-        {
-            if(txt.length()>0) txt.pop_back();
-        }
-        else
-        {
-            txt+=(char)key;
-        }
+        isneo=!isneo;
+        return;
+    }
+
+    // text
+    if(key==13) // enter
+    {
+        txt=string("");
+    }
+    else if(key==8)
+    {
+        if(txt.length()>0) txt.pop_back();
+    }
+    else
+    {
+        txt+=(char)key;
     }
 }
 
