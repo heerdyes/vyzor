@@ -15,22 +15,38 @@ void ofApp::setup()
     vg.setup(camw, camh);
 
     fnt.load("OCRA", 9);
+    f1.load("OCRA", 12);
     f2.load("OCRA", 22);
     symctr=0;
 
     asc = string("  ..,,,'''``--_:;^^**""=+<>iv%&xclrs)/){}I?!][1taeo7zjLunT#@JCwfy325Fp6mqSghVd4EgXPGZbYkOA8U$KHDBWNMR0Q");
     sym = string("<^>v<^>v _ _ _ _ -\\|/--\\|/- lliivveeccoodde..bbllrr -/|\\-/|\\-");
     txt = string("");
+    
+    for(int i=0;i<GN;i++)
+    {
+        gx[i].y=ofRandom(ofGetHeight());
+        gx[i].vx=ofRandom(144,216);
+    }
+    
+    isglitch=true;
 }
 
 //--------------------------------------------------------------
 void ofApp::update()
 {
     vg.update();
+    
     if(frmctr%10==0)
     {
         symctr=(symctr+1)%sym.size();
     }
+    
+    for(int i=0;i<GN;i++)
+    {
+        gx[i].evolve();
+    }
+    
     frmctr++;
 }
 
@@ -67,12 +83,25 @@ void ofApp::draw()
     f2.drawString(txt, xoff+78, dh);
     
     // date and time
+    string dt="OU0/MWG0/SS0/EARTH0/IND0/BLR0 :: ";
+    dt+=ofToString(ofGetYear());
+    dt+=ofToString(ofGetMonth());
+    dt+=ofToString(ofGetDay());
+    dt+="_";
+    dt+=ofToString(ofGetHours());
+    dt+=ofToString(ofGetMinutes());
+    dt+=ofToString(ofGetSeconds());
+    f1.drawString(dt, 20,30);
+    
+    // glitching
+    if(isglitch) for(int i=0;i<GN;i++) gx[i].rndr();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
     cout<<key<<endl;
+    if(key==57345) isglitch=!isglitch;
     if(mode=='c')
     {
         if(key==57344)
