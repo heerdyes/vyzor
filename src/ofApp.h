@@ -2,7 +2,8 @@
 
 #include "ofMain.h"
 
-#define GN 4
+#define GN 6
+#define PWMI 6
 
 class glch
 {
@@ -20,23 +21,20 @@ public:
     
     void rndr()
     {
-        ofSetColor(0,255,128,108);
-        ofDrawLine(x-5,y,x+5,y);
-        ofDrawLine(x-10,y,x+10,y);
-        ofDrawLine(x-15,y,x+15,y);
+        ofSetColor(0,255,128,55);
+        ofDrawLine(x-5,y,x+5,y-1);
+        ofDrawLine(x-10,y,x+10,y+1);
         ofDrawLine(x-20,y,x+20,y);
-        ofDrawLine(x-25,y,x+25,y);
-        ofDrawLine(x-30,y,x+30,y);
-        ofDrawLine(x-35,y,x+35,y);
         ofDrawLine(x-40,y,x+40,y);
-        ofDrawLine(x-45,y,x+45,y);
+        ofDrawLine(x-80,y,x+80,y-1);
+        ofDrawLine(x-160,y,x+160,y+1);
     }
     
     void evolve()
     {
         x+=vx;
         y+=vy;
-        float ww=ofGetWidth()*4;
+        float ww=ofGetWidth()*PWMI;
         float hh=ofGetHeight();
         if(x>ww)
         {
@@ -66,11 +64,16 @@ class ofApp : public ofBaseApp{
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
 
+        void cmdproc(string ln);
+        void lstr(ofTrueTypeFont ttf, string lcb, float fsz, float x, float y, float xd, float yd);
+        void rstr(ofTrueTypeFont ttf, string lcb, float fsz, float x, float y, float xd, float yd);
+
         ofVideoGrabber vg;
         int camw;
         int camh;
         
         string asc;
+        string xsc;
         ofTrueTypeFont fnt;
         ofTrueTypeFont f2;
         ofTrueTypeFont f1;
@@ -84,5 +87,7 @@ class ofApp : public ofBaseApp{
         glch gx[GN];
         bool isglitch;
         bool isneo;
+        bool isares;
+        string cln;
+        string host;
 };
-
